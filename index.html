@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Special Galery of aniversary</title>
+    <title>Our special gallery and Happy Anniversary</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -22,11 +22,21 @@
 
         .hidden { display: none !important; }
 
-        /* --- 1. Heart Calendar Section --- */
+        /* --- 1. 3D Heart Calendar Section --- */
         #calendar-screen {
             height: 100vh;
             display: flex; flex-direction: column;
             justify-content: center; align-items: center;
+            perspective: 1000px; /* For 3D depth */
+        }
+
+        .calendar-container {
+            transform: rotateX(10deg) rotateY(-5deg);
+            transition: transform 0.5s;
+        }
+
+        .calendar-container:hover {
+            transform: rotateX(0deg) rotateY(0deg);
         }
 
         .calendar-grid {
@@ -34,10 +44,12 @@
             grid-template-columns: repeat(7, 1fr);
             gap: 12px;
             max-width: 400px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.4);
-            border-radius: 20px;
-            backdrop-filter: blur(8px);
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 30px;
+            backdrop-filter: blur(15px);
+            box-shadow: 20px 20px 60px rgba(0,0,0,0.1), -5px -5px 20px rgba(255,255,255,0.5);
+            border: 1px solid rgba(255,255,255,0.8);
         }
 
         .heart-date {
@@ -45,8 +57,10 @@
             width: 45px; height: 45px;
             display: flex; justify-content: center; align-items: center;
             cursor: pointer;
-            transition: 0.3s;
+            transition: 0.3s transform;
         }
+        
+        .heart-date:hover { transform: scale(1.2); }
 
         .heart-icon {
             position: absolute;
@@ -60,6 +74,10 @@
             font-size: 14px; font-weight: 600;
             color: #444;
         }
+
+        /* Highlight 27 */
+        .special-date .heart-icon { color: var(--primary-pink); }
+        .special-date .date-num { color: white; }
 
         /* --- 2. Styling Sections --- */
         section {
@@ -117,34 +135,50 @@
             padding: 30px; border-radius: 20px;
             max-width: 500px; text-align: center;
             border: 1px solid white; line-height: 1.8;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
 
-        /* --- 4. Period Care Section --- */
-        .care-list {
-            text-align: left; font-size: 1rem;
-            color: #555;
+        /* --- 4. Poem Section --- */
+        .poem-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            color: #444;
+            line-height: 1.6;
         }
-        .care-list li { margin-bottom: 12px; list-style: none; }
 
-        /* --- Popup --- */
-        #thank-you-popup {
-            position: fixed; bottom: -200px; left: 50%;
-            transform: translateX(-50%);
-            background: white; padding: 25px;
-            border-radius: 30px 30px 0 0;
-            width: 90%; max-width: 400px;
-            text-align: center; box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
-            transition: bottom 0.8s ease-in-out;
-            z-index: 999;
+        /* --- 5. Thank You Box (Professional) --- */
+        #thank-you-section {
+            padding: 100px 20px;
+            text-align: center;
         }
-        #thank-you-popup.show { bottom: 0; }
+        
+        .final-box {
+            background: white;
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 15px 45px rgba(201, 24, 74, 0.2);
+            border: 2px solid var(--primary-pink);
+            max-width: 450px;
+            margin: 0 auto;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: 1s all ease;
+        }
+        
+        .final-box.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
 
     <div id="calendar-screen">
-        <h2 style="color: var(--deep-rose); font-family: 'Dancing Script'; font-size: 2.5rem;">Choose Our Date ❤️</h2>
-        <div class="calendar-grid" id="calendar-days"></div>
+        <h2 style="color: var(--deep-rose); font-family: 'Dancing Script'; font-size: 3rem; margin-bottom: 10px;">December 2025</h2>
+        <p style="color: #666; margin-bottom: 20px;">Pick our special day ❤️</p>
+        <div class="calendar-container">
+            <div class="calendar-grid" id="calendar-days"></div>
+        </div>
     </div>
 
     <div id="main-content" class="hidden">
@@ -186,41 +220,62 @@
         </section>
 
         <section id="care-section">
-            <div class="title">Care Guide for You during Period.</div>
-            <div class="glass-box care-list">
-                <p style="font-weight: bold; color: var(--deep-rose); border-bottom: 1px solid #ddd; padding-bottom: 5px;">Must Follow for Comfort:</p>
-                <li>🌸 <strong>Warmth:</strong> Use a heating pad or drink warm water to soothe cramps.</li>
-                <li>🌸 <strong>Iron Boost:</strong> Eat spinach, beans, or dark chocolate to stay energetic.</li>
-                <li>🌸 <strong>Hydration:</strong> Drink plenty of water to reduce bloating.</li>
-                <li>🌸 <strong>Rest:</strong> Your body is working hard, don't feel guilty for sleeping more.</li>
-                <li>🌸 <strong>Avoid:</strong> Try to skip heavy caffeine (coffee) and very salty snacks.</li>
+            <div class="title">Care Guide for You</div>
+            <div class="glass-box">
+                <ul style="text-align: left; list-style: none; padding: 0;">
+                    <li style="margin-bottom: 12px;">🌸 <strong>Warmth:</strong> Use a heating pad or drink warm water.</li>
+                    <li style="margin-bottom: 12px;">🌸 <strong>Iron Boost:</strong> Eat spinach, beans, or dark chocolate.</li>
+                    <li style="margin-bottom: 12px;">🌸 <strong>Hydration:</strong> Drink plenty of water.</li>
+                    <li style="margin-bottom: 12px;">🌸 <strong>Rest:</strong> Your body is working hard, sleep well.</li>
+                </ul>
             </div>
-            <button class="btn-skip" onclick="scrollToSection('memories-section')">Favorite Memories ❤️</button>
+            <button class="btn-skip" onclick="scrollToSection('memories-section')">Milestones ❤️</button>
         </section>
 
-        <section id="memories-section" style="padding-bottom: 150px;">
+        <section id="memories-section">
             <div class="title">Special Milestones</div>
             <div class="glass-box">
                 <p>📅 <strong>19 Jan 2025:</strong> The day you accepted me.</p>
                 <p>📅 <strong>25 Dec 2025:</strong> Our memorable night together.</p>
                 <p>📅 <strong>27 Sep 2024:</strong> The beginning of us.</p>
             </div>
+            <button class="btn-skip" onclick="scrollToSection('poem-section')">A Poem for You ✍️</button>
         </section>
-    </div>
 
-    <div id="thank-you-popup">
-        <h2 style="color: var(--deep-rose);">Thank You, My Everything! 🌹</h2>
-        <p>You make my world beautiful every single day.</p>
+        <section id="poem-section">
+            <div class="title">Eternal Anniversary</div>
+            <div class="glass-box poem-text">
+                Another year of holding hands,<br>
+                Through golden sun and shifting sands.<br>
+                With every breath and every beat,<br>
+                You make my life so whole and sweet.<br><br>
+                No words can paint the love I feel,<br>
+                A bond so deep, so pure, so real.<br>
+                Happy Anniversary, my beautiful soul,<br>
+                Loving you is my life's only goal.
+            </div>
+        </section>
+
+        <section id="thank-you-section">
+            <div class="final-box" id="final-box">
+                <h2 style="color: var(--deep-rose); font-family: 'Dancing Script'; font-size: 2.5rem;">Thank You, My Everything! 🌹</h2>
+                <p style="color: #555; font-size: 1.1rem;">You make my world beautiful every single day. I'm blessed to have you by my side.</p>
+                <p style="font-size: 1.5rem;">Forever & Always ❤️</p>
+            </div>
+        </section>
     </div>
 
     <script>
         const folder = "images";
 
-        // Build Calendar
+        // Build December 2025 Calendar
         const cal = document.getElementById('calendar-days');
-        for (let i = 1; i <= 31; i++) {
+        // December 2025 starts on Monday (1)
+        const daysInDec = 31;
+        
+        for (let i = 1; i <= daysInDec; i++) {
             const d = document.createElement('div');
-            d.className = 'heart-date';
+            d.className = i === 27 ? 'heart-date special-date' : 'heart-date';
             d.innerHTML = `<span class="heart-icon">❤️</span><span class="date-num">${i}</span>`;
             d.onclick = () => {
                 if (i === 27) startApp();
@@ -235,27 +290,27 @@
             window.scrollTo(0,0);
         }
 
-        // Photo Gallery
-        let p = 1;
         function nextPhoto() {
+            let pCount = document.getElementById('p-count');
+            let p = parseInt(pCount.innerText);
             if (p < 15) {
                 p++;
                 document.getElementById('current-photo').src = `${folder}/${p}.jpg`;
-                document.getElementById('p-count').innerText = p;
+                pCount.innerText = p;
             } else {
                 scrollToSection('video-section');
             }
         }
 
-        // Video Gallery
-        let v = 1;
         function nextVideo() {
+            let vCount = document.getElementById('v-count');
+            let v = parseInt(vCount.innerText);
             if (v < 5) {
                 v++;
                 const vid = document.getElementById('current-video');
                 vid.src = `${folder}/v${v}.mp4`;
                 vid.play();
-                document.getElementById('v-count').innerText = v;
+                vCount.innerText = v;
             } else {
                 scrollToSection('care-section');
             }
@@ -265,13 +320,16 @@
             document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Show Popup at the end
+        // Professional Box Appearance Logic
         window.onscroll = function() {
-            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 80) {
-                document.getElementById('thank-you-popup').classList.add('show');
+            const finalBox = document.getElementById('final-box');
+            const rect = finalBox.getBoundingClientRect();
+            if (rect.top < window.innerHeight - 100) {
+                finalBox.classList.add('show');
             }
         };
     </script>
+
 </body>
-    </html>
-                
+</html>
+    
