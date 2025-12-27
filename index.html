@@ -1,146 +1,332 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gallery 3.0 | Special Gift ❤️</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body, html { height: 100%; width: 100%; font-family: 'Arial', sans-serif; overflow: hidden; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Special Anniversary</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-pink: #ff758f;
+            --soft-purple: #c3aed6;
+            --bg-gradient: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 100%);
+        }
 
-    /* Background Gradient */
-    .main-wrapper {
-      height: 100vh; width: 100vw;
-      background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
-      display: flex; justify-content: center; align-items: center;
-      position: relative;
-    }
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-gradient);
+            color: #444;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
 
-    /* Floating Hearts (Sparkles) */
-    .heart {
-      position: absolute; color: #ff4d6d; font-size: 20px;
-      animation: float 5s infinite linear; opacity: 0;
-    }
-    @keyframes float {
-      0% { transform: translateY(100vh) scale(0); opacity: 1; }
-      100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
-    }
+        .hidden { display: none !important; }
 
-    /* Welcome Card (Starting Pop-up) */
-    #welcome-screen {
-      position: absolute; z-index: 100; background: rgba(255, 255, 255, 0.8);
-      padding: 40px; border-radius: 30px; text-align: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1); backdrop-filter: blur(10px);
-      width: 90%; max-width: 400px;
-    }
-    .welcome-card h1 { color: #d4145a; margin-bottom: 20px; font-size: 1.8rem; }
-    .btn-group { display: flex; flex-direction: column; gap: 15px; }
-    .menu-btn {
-      padding: 12px; border-radius: 25px; border: none;
-      background: #ff758c; color: white; font-weight: bold;
-      cursor: pointer; transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-    .menu-btn:hover { background: #ff4d6d; transform: scale(1.05); }
+        /* Step 1: Calendar Styling */
+        #calendar-screen {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
 
-    /* Gallery (Hidden initially) */
-    #gallery-view {
-      display: none; width: 100%; height: 100%;
-      background: linear-gradient(to bottom, #7028e4, #e91e63);
-      flex-direction: column; align-items: center; justify-content: center;
-    }
-    .top-label {
-      background: rgba(255,255,255,0.2); padding: 10px 30px;
-      border-radius: 50px; color: white; margin-bottom: 30px;
-      border: 1px solid rgba(255,255,255,0.4);
-    }
-    .cards-container {
-      display: flex; gap: 20px; overflow-x: auto; width: 100%;
-      padding: 20px 50px; perspective: 1000px; scrollbar-width: none;
-    }
-    .cards-container::-webkit-scrollbar { display: none; }
+        .calendar-card {
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 350px;
+            width: 90%;
+        }
 
-    .card {
-      min-width: 280px; height: 400px; background: white;
-      border-radius: 20px; border: 5px solid white; overflow: hidden;
-      transform: rotateY(-15deg); transition: 0.5s;
-      box-shadow: 10px 10px 25px rgba(0,0,0,0.3); flex-shrink: 0;
-    }
-    .card:hover { transform: rotateY(0deg) scale(1.05); z-index: 10; }
-    .card img, .card video { width: 100%; height: 100%; object-fit: cover; }
+        .calendar-header {
+            background: var(--primary-pink);
+            color: white;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
 
-    .last-msg-btn {
-      margin-top: 30px; padding: 12px 40px; background: #ff4d6d;
-      color: white; border-radius: 50px; border: none; cursor: pointer;
-    }
-  </style>
+        .days-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+
+        .day {
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+
+        .day:hover { background: #ffebee; }
+        .special-day {
+            background: var(--primary-pink) !important;
+            color: white;
+            animation: pulse 1.5s infinite;
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Section Styling */
+        section {
+            padding: 50px 20px;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            color: var(--primary-pink);
+            margin-bottom: 20px;
+        }
+
+        /* 3D Carousel Style for Media */
+        .media-container {
+            position: relative;
+            width: 300px;
+            height: 400px;
+            perspective: 1000px;
+        }
+
+        .media-card {
+            width: 100%;
+            height: 100%;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .media-card img, .media-card video {
+            width: 100%;
+            height: 85%;
+            object-fit: cover;
+        }
+
+        .media-info {
+            height: 15%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            background: #fff;
+        }
+
+        .nav-btn {
+            margin-top: 20px;
+            padding: 10px 25px;
+            background: var(--primary-pink);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(255,117,143,0.4);
+        }
+
+        /* Poetry & Memories */
+        .glass-box {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 600px;
+            text-align: center;
+            margin: 20px;
+            border: 1px solid white;
+        }
+
+        .memory-item {
+            margin: 15px 0;
+            padding: 10px;
+            border-bottom: 1px dashed var(--primary-pink);
+        }
+
+        /* Popup */
+        #thank-you-popup {
+            position: fixed;
+            bottom: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 20px 40px;
+            border-radius: 50px 50px 0 0;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
+            transition: bottom 0.5s ease;
+            z-index: 1000;
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        #thank-you-popup.show { bottom: 0; }
+    </style>
 </head>
 <body>
 
-<div class="main-wrapper" id="bg-wrap">
-  <div id="welcome-screen">
-    <h1>Welcome to Our Gallery</h1>
-    <p style="margin-bottom: 20px; color: #666;">Every moment with you is a treasure ❤️</p>
-    <div class="btn-group">
-      <button class="menu-btn">Change Mood ✨</button>
-      <button class="menu-btn" onclick="openGallery()">Enter Our Love Story 🌹</button>
-      <button class="menu-btn">This is for you 🎵</button>
+    <div id="calendar-screen">
+        <h2 style="color: #ff4d6d;">Choose our special date ❤️</h2>
+        <div class="calendar-card">
+            <div class="calendar-header">December 2025</div>
+            <div class="days-grid" id="calendar-days">
+                </div>
+        </div>
     </div>
-  </div>
 
-  <div id="gallery-view">
-    <div class="top-label">Our Beautiful Memories</div>
-    <div class="cards-container" id="cards-wrapper">
-      </div>
-    <p style="color: white; margin-top: 20px; font-style: italic;">Every moment with you is magic ✨</p>
-    <button class="last-msg-btn" onclick="alert('I Love You Jaan! ❤️')">Last Message 💌</button>
-  </div>
-</div>
+    <div id="main-content" class="hidden">
+        
+        <section id="shayari-section">
+            <div class="title">For You...</div>
+            <div class="glass-box">
+                <p id="shayari-text" style="font-size: 1.3rem; line-height: 1.8;">
+                    "Aap Mile toh har khusi mil  gayi hai,<br>
+                    Ek Sal Ek mahine ki yeh rah khil gai Hai<br>
+                </p>
+            </div>
+            <button class="nav-btn" onclick="scrollToSection('photo-section')">See Our Photos 📸</button>
+        </section>
 
-<script>
-  // 1. Create Hearts (Sparkles)
-  const bg = document.getElementById('bg-wrap');
-  for (let i = 0; i < 20; i++) {
-    const heart = document.createElement('div');
-    heart.className = 'heart';
-    heart.innerHTML = '❤️';
-    heart.style.left = Math.random() * 100 + 'vw';
-    heart.style.animationDelay = Math.random() * 5 + 's';
-    bg.appendChild(heart);
-  }
+        <section id="photo-section">
+            <div class="title">Our Moments</div>
+            <div class="media-container">
+                <div class="media-card" id="photo-card">
+                    <img id="current-photo" src="1.jpg" alt="Memory">
+                    <div class="media-info">
+                        <span id="photo-count">1</span> <span style="margin-left:10px">❤️</span>
+                    </div>
+                </div>
+            </div>
+            <button class="nav-btn" onclick="nextPhoto()">Next Photo ➡️</button>
+        </section>
 
-  function openGallery() {
-    document.getElementById('welcome-screen').style.display = 'none';
-    const gallery = document.getElementById('gallery-view');
-    gallery.style.display = 'flex';
-    loadContent();
-  }
+        <section id="video-section">
+            <div class="title">Our Stories</div>
+            <div class="media-container">
+                <div class="media-card">
+                    <video id="current-video" controls>
+                        <source src="v1.mp4" type="video/mp4">
+                    </video>
+                    <div class="media-info">
+                        <span id="video-count">1</span> <span style="margin-left:10px">✨</span>
+                    </div>
+                </div>
+            </div>
+            <button class="nav-btn" onclick="nextVideo()">Next Video ➡️</button>
+        </section>
 
-  function loadContent() {
-    const wrapper = document.getElementById('cards-wrapper');
-    
-    // Video Slots: v1.mp4 to v5.mp4
-    for (let v = 1; v <= 5; v++) {
-      const card = document.createElement('div');
-      card.className = 'card';
-      card.innerHTML = `<video src="v${v}.mp4" autoplay loop muted playsinline onerror="this.parentElement.style.display='none'"></video>`;
-      wrapper.appendChild(card);
-    }
+        <section id="memories-section">
+            <div class="title">Favorite Memories</div>
+            <div class="glass-box">
+                <div class="memory-item"><strong>19 Jan 2025:</strong> The day Our you accepted me.</div>
+                <div class="memory-item"><strong>25 Dec 2025:</strong> Our Memorable night  together.</div>
+                <div class="memory-item"><strong>27 Sep 2024:</strong> Where it all began... the start of us.</div>
+            </div>
+        </section>
 
-    // Photo Slots: 1.jpg to 15.jpg
-    for (let p = 1; p <= 15; p++) {
-      const card = document.createElement('div');
-      card.className = 'card';
-      const img = document.createElement('img');
-      img.src = `${p}.jpg`;
-      // Error handling: agar photo nahi mili toh placeholder dikhayega
-      img.onerror = function() {
-        this.src = `https://via.placeholder.com/280x400?text=Photo+${p}+Missing`;
-      };
-      card.appendChild(img);
-      wrapper.appendChild(card);
-    }
-  }
-</script>
+        <section id="poem-section" style="padding-bottom: 150px;">
+            <div class="title">A Promise</div>
+            <div class="glass-box">
+                <p style="font-style: italic; font-size: 1.1rem;">
+                    In every breath, in every beat,<br>
+                    You make my life feel so complete.<br>
+                    A year has passed, a month has flown,<br>
+                    The greatest love I've ever known.<br>
+                    Through highs and lows, hand in hand,<br>
+                    Together we'll forever stand.
+                </p>
+            </div>
+        </section>
+    </div>
 
+    <div id="thank-you-popup">
+        <h3 style="color: var(--primary-pink); margin: 0;">Thank You, My Love! ❤️</h3>
+        <p style="font-size: 0.9rem;">You are the best thing that ever happened to me. Here's to many more!</p>
+    </div>
+
+    <script>
+        // --- CALENDAR LOGIC ---
+        const daysContainer = document.getElementById('calendar-days');
+        for (let i = 1; i <= 31; i++) {
+            const dayDiv = document.createElement('div');
+            dayDiv.classList.add('day');
+            dayDiv.innerText = i;
+            if (i === 27) {
+                dayDiv.classList.add('special-day');
+                dayDiv.onclick = startApp;
+            } else {
+                dayDiv.onclick = () => alert("Not this day! Hint: 27th is our day. 😉");
+            }
+            daysContainer.appendChild(dayDiv);
+        }
+
+        function startApp() {
+            document.getElementById('calendar-screen').classList.add('hidden');
+            document.getElementById('main-content').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        // --- PHOTO GALLERY LOGIC ---
+        let currentPhotoIdx = 1;
+        const totalPhotos = 15;
+        function nextPhoto() {
+            if (currentPhotoIdx < totalPhotos) {
+                currentPhotoIdx++;
+                document.getElementById('current-photo').src = `${currentPhotoIdx}.jpg`;
+                document.getElementById('photo-count').innerText = currentPhotoIdx;
+            } else {
+                alert("That's all the photos! Let's watch videos now.");
+                scrollToSection('video-section');
+            }
+        }
+
+        // --- VIDEO GALLERY LOGIC ---
+        let currentVidIdx = 1;
+        const totalVideos = 5;
+        function nextVideo() {
+            if (currentVidIdx < totalVideos) {
+                currentVidIdx++;
+                const videoPlayer = document.getElementById('current-video');
+                videoPlayer.src = `v${currentVidIdx}.mp4`;
+                videoPlayer.play();
+                document.getElementById('video-count').innerText = currentVidIdx;
+            } else {
+                alert("All videos done! Check out our memories.");
+                scrollToSection('memories-section');
+            }
+        }
+
+        // --- NAVIGATION & POPUP ---
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        window.onscroll = function() {
+            // Show popup when user reaches the end
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) {
+                document.getElementById('thank-you-popup').classList.add('show');
+            }
+        };
+    </script>
 </body>
-</html>
+  </html>
+          
