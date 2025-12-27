@@ -72,14 +72,12 @@
             animation: pulse 1.5s infinite;
         }
 
-        /* Animations */
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.1); }
             100% { transform: scale(1); }
         }
 
-        /* Section Styling */
         section {
             padding: 50px 20px;
             min-height: 80vh;
@@ -94,9 +92,9 @@
             font-size: 3rem;
             color: var(--primary-pink);
             margin-bottom: 20px;
+            text-align: center;
         }
 
-        /* 3D Carousel Style for Media */
         .media-container {
             position: relative;
             width: 300px;
@@ -113,7 +111,6 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .media-card img, .media-card video {
@@ -134,7 +131,7 @@
 
         .nav-btn {
             margin-top: 20px;
-            padding: 10px 25px;
+            padding: 12px 30px;
             background: var(--primary-pink);
             color: white;
             border: none;
@@ -144,7 +141,6 @@
             box-shadow: 0 4px 15px rgba(255,117,143,0.4);
         }
 
-        /* Poetry & Memories */
         .glass-box {
             background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(10px);
@@ -162,20 +158,19 @@
             border-bottom: 1px dashed var(--primary-pink);
         }
 
-        /* Popup */
         #thank-you-popup {
             position: fixed;
-            bottom: -100px;
+            bottom: -150px;
             left: 50%;
             transform: translateX(-50%);
             background: white;
             padding: 20px 40px;
-            border-radius: 50px 50px 0 0;
+            border-radius: 30px 30px 0 0;
             box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
-            transition: bottom 0.5s ease;
+            transition: bottom 0.6s ease;
             z-index: 1000;
             text-align: center;
-            width: 100%;
+            width: 90%;
             max-width: 400px;
         }
 
@@ -188,8 +183,7 @@
         <h2 style="color: #ff4d6d;">Choose our special date ❤️</h2>
         <div class="calendar-card">
             <div class="calendar-header">December 2025</div>
-            <div class="days-grid" id="calendar-days">
-                </div>
+            <div class="days-grid" id="calendar-days"></div>
         </div>
     </div>
 
@@ -198,9 +192,9 @@
         <section id="shayari-section">
             <div class="title">For You...</div>
             <div class="glass-box">
-                <p id="shayari-text" style="font-size: 1.3rem; line-height: 1.8;">
-                    "Aap Mile toh har khusi mil  gayi hai,<br>
-                    Ek Sal Ek mahine ki yeh rah khil gai Hai<br>
+                <p style="font-size: 1.3rem; line-height: 1.8;">
+                    "Aap Mile toh har khusi mil gayi hai,<br>
+                    Ek Sal Ek mahine ki yeh rah khil gai Hai"<br>
                 </p>
             </div>
             <button class="nav-btn" onclick="scrollToSection('photo-section')">See Our Photos 📸</button>
@@ -209,8 +203,8 @@
         <section id="photo-section">
             <div class="title">Our Moments</div>
             <div class="media-container">
-                <div class="media-card" id="photo-card">
-                    <img id="current-photo" src="1.jpg" alt="Memory">
+                <div class="media-card">
+                    <img id="current-photo" src="images/1.jpg" alt="Memory">
                     <div class="media-info">
                         <span id="photo-count">1</span> <span style="margin-left:10px">❤️</span>
                     </div>
@@ -224,7 +218,7 @@
             <div class="media-container">
                 <div class="media-card">
                     <video id="current-video" controls>
-                        <source src="v1.mp4" type="video/mp4">
+                        <source src="images/v1.mp4" type="video/mp4">
                     </video>
                     <div class="media-info">
                         <span id="video-count">1</span> <span style="margin-left:10px">✨</span>
@@ -237,8 +231,8 @@
         <section id="memories-section">
             <div class="title">Favorite Memories</div>
             <div class="glass-box">
-                <div class="memory-item"><strong>19 Jan 2025:</strong> The day Our you accepted me.</div>
-                <div class="memory-item"><strong>25 Dec 2025:</strong> Our Memorable night  together.</div>
+                <div class="memory-item"><strong>19 Jan 2025:</strong> The day You accepted me.</div>
+                <div class="memory-item"><strong>25 Dec 2025:</strong> Our Memorable night together.</div>
                 <div class="memory-item"><strong>27 Sep 2024:</strong> Where it all began... the start of us.</div>
             </div>
         </section>
@@ -250,9 +244,7 @@
                     In every breath, in every beat,<br>
                     You make my life feel so complete.<br>
                     A year has passed, a month has flown,<br>
-                    The greatest love I've ever known.<br>
-                    Through highs and lows, hand in hand,<br>
-                    Together we'll forever stand.
+                    The greatest love I've ever known.
                 </p>
             </div>
         </section>
@@ -260,11 +252,13 @@
 
     <div id="thank-you-popup">
         <h3 style="color: var(--primary-pink); margin: 0;">Thank You, My Love! ❤️</h3>
-        <p style="font-size: 0.9rem;">You are the best thing that ever happened to me. Here's to many more!</p>
+        <p>You are the best thing that ever happened to me!</p>
     </div>
 
     <script>
-        // --- CALENDAR LOGIC ---
+        const folder = "images"; // <--- सुनिश्चित करें कि फोल्डर का नाम यही है
+
+        // --- CALENDAR ---
         const daysContainer = document.getElementById('calendar-days');
         for (let i = 1; i <= 31; i++) {
             const dayDiv = document.createElement('div');
@@ -285,13 +279,13 @@
             window.scrollTo(0, 0);
         }
 
-        // --- PHOTO GALLERY LOGIC ---
+        // --- PHOTOS ---
         let currentPhotoIdx = 1;
         const totalPhotos = 15;
         function nextPhoto() {
             if (currentPhotoIdx < totalPhotos) {
                 currentPhotoIdx++;
-                document.getElementById('current-photo').src = `${currentPhotoIdx}.jpg`;
+                document.getElementById('current-photo').src = `${folder}/${currentPhotoIdx}.jpg`;
                 document.getElementById('photo-count').innerText = currentPhotoIdx;
             } else {
                 alert("That's all the photos! Let's watch videos now.");
@@ -299,34 +293,32 @@
             }
         }
 
-        // --- VIDEO GALLERY LOGIC ---
+        // --- VIDEOS ---
         let currentVidIdx = 1;
         const totalVideos = 5;
         function nextVideo() {
             if (currentVidIdx < totalVideos) {
                 currentVidIdx++;
                 const videoPlayer = document.getElementById('current-video');
-                videoPlayer.src = `v${currentVidIdx}.mp4`;
+                videoPlayer.src = `${folder}/v${currentVidIdx}.mp4`;
                 videoPlayer.play();
                 document.getElementById('video-count').innerText = currentVidIdx;
             } else {
-                alert("All videos done! Check out our memories.");
                 scrollToSection('memories-section');
             }
         }
 
-        // --- NAVIGATION & POPUP ---
         function scrollToSection(id) {
             document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
         }
 
         window.onscroll = function() {
-            // Show popup when user reaches the end
-            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) {
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100) {
                 document.getElementById('thank-you-popup').classList.add('show');
             }
         };
     </script>
+
 </body>
-  </html>
-          
+</html>
+    
