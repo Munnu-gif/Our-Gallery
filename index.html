@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Gallery 3.0 ❤️</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body, html { height: 100%; width: 100%; overflow: hidden; background: #000; perspective: 1000px; font-family: sans-serif; }
+
+    /* Intro Page */
+    #intro-screen {
+      position: absolute; width: 100%; height: 100%;
+      background: linear-gradient(135deg, #ff9a9e, #fecfef);
+      display: flex; justify-content: center; align-items: center; z-index: 100;
+    }
+    .card { background: rgba(255,255,255,0.5); padding: 30px; border-radius: 15px; text-align: center; backdrop-filter: blur(5px); }
+    .btn { padding: 10px 30px; background: #ff4d6d; color: #fff; border: none; border-radius: 25px; cursor: pointer; font-size: 1.2rem; margin-top: 15px; }
+
+    /* Gallery */
+    #gallery-container { display: none; height: 100%; width: 100%; background: radial-gradient(circle, #2b1055, #000); }
+    #drag-container, #spin-container { position: relative; display: flex; margin: auto; transform-style: preserve-3d; }
+    #drag-container { top: 20%; width: 130px; height: 190px; }
+    #spin-container { width: 100%; height: 100%; animation: spinRevert 40s infinite linear; }
+
+    .gallery-item { position: absolute; left: 0; top: 0; width: 100%; height: 100%; border: 2px solid white; border-radius: 10px; overflow: hidden; box-shadow: 0 0 10px pink; }
+    .gallery-item img, .gallery-item video { width: 100%; height: 100%; object-fit: cover; }
+
+    /* Emoji Overlay */
+    .emoji { position: absolute; top: 5px; right: 5px; font-size: 20px; z-index: 10; animation: bounce 2s infinite; }
+    @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
+    @keyframes spinRevert { from { transform: rotateY(360deg); } to { transform: rotateY(0deg); } }
+
+    /* Popup */
+    #final-popup { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center; z-index: 1000; }
+    .popup-content { background: #fff; padding: 40px; border-radius: 20px; text-align: center; border: 4px solid #ff4d6d; }
+  </style>
+</head>
+<body>
+
+  <div id="intro-screen">
+    <div class="card">
+      <h1>❤️ Hello Wifeyyyyy ❤️</h1>
+      <button class="btn" onclick="start()">Open Surprise 🌹</button>
+    </div>
+  </div>
+
+  <div id="gallery-container">
+    <div id="drag-container">
+      <div id="spin-container">
+        </div>
+    </div>
+    <div style="position:absolute; bottom:30px; width:100%; text-align:center;">
+      <button class="btn" onclick="showPopup()">Last Message 💌</button>
+    </div>
+  </div>
+
+  <div id="final-popup" id="final-popup">
+    <div class="popup-content">
+      <h2 style="color:#e91e63">Love You Jana ❤️</h2>
+      <h3 style="margin:10px 0">Have a good day Cutie! 😘</h3>
+      <button class="btn" onclick="document.getElementById('final-popup').style.display='none'">Close</button>
+    </div>
+  </div>
+
+  <script>
+    var radius = 350; 
+    var emojis = ["❤️", "💖", "😍", "🥰", "✨"];
+
+    function start() {
+      document.getElementById('intro-screen').style.display = 'none';
+      document.getElementById('gallery-container').style.display = 'block';
+      init();
+    }
+
+    function showPopup() { document.getElementById('final-popup').style.display = 'flex'; }
+
+    function init() {
+      var container = document.getElementById('spin-container');
+      
+      // 5 Videos
+      for(var i=1; i<=5; i++) {
+        createItem('v'+i+'.mp4', true);
+      }
+      // 15 Photos
+      for(var j=1; j<=15; j++) {
+        createItem(j+'.jpg', false);
+      }
+
+      var items = container.getElementsByClassName('gallery-item');
+      for(var k=0; k<items.length; k++) {
+        items[k].style.transform = "rotateY(" + (k * (360 / items.length)) + "deg) translateZ(" + radius + "px)";
+      }
+    }
+
+    function createItem(src, isVideo) {
+      var div = document.createElement('div');
+      div.className = 'gallery-item';
+      
+      var el = document.createElement(isVideo ? 'video' : 'img');
+      el.src = src;
+      if(isVideo) { el.autoplay = true; el.loop = true; el.muted = true; }
+      
+      var emo = document.createElement('div');
+      emo.className = 'emoji';
+      emo.innerText = emojis[Math.floor(Math.random()*emojis.length)];
+      
+      div.appendChild(el);
+      div.appendChild(emo);
+      document.getElementById('spin-container').appendChild(div);
+    }
+  </script>
+</body>
+  </html>
+  
