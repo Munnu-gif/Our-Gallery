@@ -3,171 +3,144 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gallery 3.0 ❤️</title>
+  <title>Gallery 3.0 | Special Gift ❤️</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    
-    body {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(to bottom, #7028e4, #e91e63); /* स्क्रीनशॉट जैसा बैकग्राउंड */
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      overflow: hidden;
-      color: white;
+    body, html { height: 100%; width: 100%; font-family: 'Arial', sans-serif; overflow: hidden; }
+
+    /* Background Gradient */
+    .main-wrapper {
+      height: 100vh; width: 100vw;
+      background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+      display: flex; justify-content: center; align-items: center;
+      position: relative;
     }
 
-    /* Top Title */
-    .top-header {
-      background: rgba(255, 255, 255, 0.2);
-      padding: 10px 40px;
-      border-radius: 50px;
-      font-size: 1.2rem;
-      border: 1px solid rgba(255,255,255,0.3);
-      margin-bottom: 40px;
-      backdrop-filter: blur(5px);
+    /* Floating Hearts (Sparkles) */
+    .heart {
+      position: absolute; color: #ff4d6d; font-size: 20px;
+      animation: float 5s infinite linear; opacity: 0;
+    }
+    @keyframes float {
+      0% { transform: translateY(100vh) scale(0); opacity: 1; }
+      100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
     }
 
-    /* Gallery Container */
-    .gallery-container {
-      display: flex;
-      gap: 20px;
-      padding: 20px 50px;
-      perspective: 1500px; /* 3D गहराई के लिए */
-      overflow-x: auto;
-      width: 100%;
-      scroll-snap-type: x mandatory;
-      scrollbar-width: none;
+    /* Welcome Card (Starting Pop-up) */
+    #welcome-screen {
+      position: absolute; z-index: 100; background: rgba(255, 255, 255, 0.8);
+      padding: 40px; border-radius: 30px; text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1); backdrop-filter: blur(10px);
+      width: 90%; max-width: 400px;
     }
-    .gallery-container::-webkit-scrollbar { display: none; }
+    .welcome-card h1 { color: #d4145a; margin-bottom: 20px; font-size: 1.8rem; }
+    .btn-group { display: flex; flex-direction: column; gap: 15px; }
+    .menu-btn {
+      padding: 12px; border-radius: 25px; border: none;
+      background: #ff758c; color: white; font-weight: bold;
+      cursor: pointer; transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .menu-btn:hover { background: #ff4d6d; transform: scale(1.05); }
 
-    /* Card Style - जैसा स्क्रीनशॉट में झुका हुआ है */
+    /* Gallery (Hidden initially) */
+    #gallery-view {
+      display: none; width: 100%; height: 100%;
+      background: linear-gradient(to bottom, #7028e4, #e91e63);
+      flex-direction: column; align-items: center; justify-content: center;
+    }
+    .top-label {
+      background: rgba(255,255,255,0.2); padding: 10px 30px;
+      border-radius: 50px; color: white; margin-bottom: 30px;
+      border: 1px solid rgba(255,255,255,0.4);
+    }
+    .cards-container {
+      display: flex; gap: 20px; overflow-x: auto; width: 100%;
+      padding: 20px 50px; perspective: 1000px; scrollbar-width: none;
+    }
+    .cards-container::-webkit-scrollbar { display: none; }
+
     .card {
-      min-width: 280px;
-      height: 400px;
-      background: white;
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 15px 15px 30px rgba(0,0,0,0.4);
-      transform: rotateY(-15deg) rotateX(5deg); /* तिरछा 3D लुक */
-      transition: 0.6s ease;
-      flex-shrink: 0;
-      scroll-snap-align: center;
-      border: 5px solid white;
+      min-width: 280px; height: 400px; background: white;
+      border-radius: 20px; border: 5px solid white; overflow: hidden;
+      transform: rotateY(-15deg); transition: 0.5s;
+      box-shadow: 10px 10px 25px rgba(0,0,0,0.3); flex-shrink: 0;
     }
-
-    .card:hover {
-      transform: rotateY(0deg) rotateX(0deg) scale(1.08);
-      z-index: 100;
-    }
-
-    .card img, .card video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    /* Bottom Text & Button */
-    .footer-section {
-      text-align: center;
-      margin-top: 40px;
-    }
-
-    .quote {
-      font-style: italic;
-      margin-bottom: 20px;
-      font-size: 0.9rem;
-      opacity: 0.9;
-    }
+    .card:hover { transform: rotateY(0deg) scale(1.05); z-index: 10; }
+    .card img, .card video { width: 100%; height: 100%; object-fit: cover; }
 
     .last-msg-btn {
-      background: #ff4d6d;
-      color: white;
-      padding: 12px 35px;
-      border-radius: 50px;
-      border: none;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-      transition: 0.3s;
-    }
-
-    .last-msg-btn:hover { transform: scale(1.1); background: #ff2a4d; }
-
-    /* Popup */
-    #popup {
-      display: none; position: fixed; inset: 0;
-      background: rgba(0,0,0,0.8);
-      justify-content: center; align-items: center; z-index: 1000;
-    }
-    .popup-box {
-      background: white; color: #333;
-      padding: 30px; border-radius: 20px; text-align: center;
-      width: 80%; max-width: 400px;
+      margin-top: 30px; padding: 12px 40px; background: #ff4d6d;
+      color: white; border-radius: 50px; border: none; cursor: pointer;
     }
   </style>
 </head>
 <body>
 
-  <div class="top-header">Our Beautiful Memories</div>
-
-  <div class="gallery-container" id="gallery">
-    </div>
-
-  <div class="footer-section">
-    <p class="quote">Every moment with you is pure magic ❤️</p>
-    <button class="last-msg-btn" onclick="openPopup()">Last Message 💌</button>
-  </div>
-
-  <div id="popup">
-    <div class="popup-box">
-      <h2 style="color: #e91e63;">Love You Forever ❤️</h2>
-      <p style="margin: 15px 0;">You make my life beautiful just by being in it!</p>
-      <button class="last-msg-btn" onclick="closePopup()">Close</button>
+<div class="main-wrapper" id="bg-wrap">
+  <div id="welcome-screen">
+    <h1>Welcome to Our Gallery</h1>
+    <p style="margin-bottom: 20px; color: #666;">Every moment with you is a treasure ❤️</p>
+    <div class="btn-group">
+      <button class="menu-btn">Change Mood ✨</button>
+      <button class="menu-btn" onclick="openGallery()">Enter Our Love Story 🌹</button>
+      <button class="menu-btn">This is for you 🎵</button>
     </div>
   </div>
 
-  <script>
-    // 1. अपनी फोटो और वीडियो का सही नाम यहाँ डालो
-    // अगर फाइल का नाम "myphoto.jpg" है तो यहाँ वही लिखना।
-    const mediaFiles = [
-      { type: 'image', src: '1.jpg' },
-      { type: 'image', src: '2.jpg' },
-      { type: 'image', src: '3.jpg' },
-      { type: 'video', src: 'v1.mp4' },
-      { type: 'image', src: '4.jpg' },
-      { type: 'image', src: '5.jpg' }
-    ];
+  <div id="gallery-view">
+    <div class="top-label">Our Beautiful Memories</div>
+    <div class="cards-container" id="cards-wrapper">
+      </div>
+    <p style="color: white; margin-top: 20px; font-style: italic;">Every moment with you is magic ✨</p>
+    <button class="last-msg-btn" onclick="alert('I Love You Jaan! ❤️')">Last Message 💌</button>
+  </div>
+</div>
 
-    const gallery = document.getElementById('gallery');
+<script>
+  // 1. Create Hearts (Sparkles)
+  const bg = document.getElementById('bg-wrap');
+  for (let i = 0; i < 20; i++) {
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    heart.innerHTML = '❤️';
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.animationDelay = Math.random() * 5 + 's';
+    bg.appendChild(heart);
+  }
 
-    mediaFiles.forEach(file => {
+  function openGallery() {
+    document.getElementById('welcome-screen').style.display = 'none';
+    const gallery = document.getElementById('gallery-view');
+    gallery.style.display = 'flex';
+    loadContent();
+  }
+
+  function loadContent() {
+    const wrapper = document.getElementById('cards-wrapper');
+    
+    // Video Slots: v1.mp4 to v5.mp4
+    for (let v = 1; v <= 5; v++) {
       const card = document.createElement('div');
       card.className = 'card';
-      
-      if(file.type === 'image') {
-        const img = document.createElement('img');
-        img.src = file.src;
-        // अगर फोटो लोड न हो तो ये लाइन उसे सफेद नहीं छोड़ेगी
-        img.onerror = function() { this.src = 'https://via.placeholder.com/280x400?text=Upload+Photo'; };
-        card.appendChild(img);
-      } else {
-        const video = document.createElement('video');
-        video.src = file.src;
-        video.autoplay = true;
-        video.loop = true;
-        video.muted = true;
-        video.playsInline = true;
-        card.appendChild(video);
-      }
-      
-      gallery.appendChild(card);
-    });
+      card.innerHTML = `<video src="v${v}.mp4" autoplay loop muted playsinline onerror="this.parentElement.style.display='none'"></video>`;
+      wrapper.appendChild(card);
+    }
 
-    function openPopup() { document.getElementById('popup').style.display = 'flex'; }
-    function closePopup() { document.getElementById('popup').style.display = 'none'; }
-  </script>
+    // Photo Slots: 1.jpg to 15.jpg
+    for (let p = 1; p <= 15; p++) {
+      const card = document.createElement('div');
+      card.className = 'card';
+      const img = document.createElement('img');
+      img.src = `${p}.jpg`;
+      // Error handling: agar photo nahi mili toh placeholder dikhayega
+      img.onerror = function() {
+        this.src = `https://via.placeholder.com/280x400?text=Photo+${p}+Missing`;
+      };
+      card.appendChild(img);
+      wrapper.appendChild(card);
+    }
+  }
+</script>
+
 </body>
 </html>
