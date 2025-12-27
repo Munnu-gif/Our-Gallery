@@ -3,114 +3,156 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Our Gallery 3.0 ❤️</title>
+  <title>Our Beautiful Gallery ❤️</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body, html { height: 100%; width: 100%; overflow: hidden; background: #000; perspective: 1000px; font-family: sans-serif; }
-
-    /* Intro Page */
-    #intro-screen {
-      position: absolute; width: 100%; height: 100%;
-      background: linear-gradient(135deg, #ff9a9e, #fecfef);
-      display: flex; justify-content: center; align-items: center; z-index: 100;
+    :root {
+      --bg-color: #a445b2; /* स्क्रीनशॉट जैसा पर्पल शेड */
     }
-    .card { background: rgba(255,255,255,0.5); padding: 30px; border-radius: 15px; text-align: center; backdrop-filter: blur(5px); }
-    .btn { padding: 10px 30px; background: #ff4d6d; color: #fff; border: none; border-radius: 25px; cursor: pointer; font-size: 1.2rem; margin-top: 15px; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body, html { 
+      height: 100%; width: 100%; 
+      background: var(--bg-color);
+      background: linear-gradient(45deg, #d4145a, #7028e4);
+      font-family: 'Arial', sans-serif;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-    /* Gallery */
-    #gallery-container { display: none; height: 100%; width: 100%; background: radial-gradient(circle, #2b1055, #000); }
-    #drag-container, #spin-container { position: relative; display: flex; margin: auto; transform-style: preserve-3d; }
-    #drag-container { top: 20%; width: 130px; height: 190px; }
-    #spin-container { width: 100%; height: 100%; animation: spinRevert 40s infinite linear; }
+    /* Intro Screen */
+    #intro-screen {
+      position: fixed; inset: 0;
+      background: #fecfef;
+      display: flex; justify-content: center; align-items: center; z-index: 1000;
+    }
+    .welcome-card {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 40px; border-radius: 20px; text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
 
-    .gallery-item { position: absolute; left: 0; top: 0; width: 100%; height: 100%; border: 2px solid white; border-radius: 10px; overflow: hidden; box-shadow: 0 0 10px pink; }
-    .gallery-item img, .gallery-item video { width: 100%; height: 100%; object-fit: cover; }
+    /* Gallery Header */
+    .header-title {
+      margin-top: 30px;
+      padding: 10px 30px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50px;
+      color: white;
+      font-style: italic;
+      border: 1px solid rgba(255,255,255,0.4);
+    }
 
-    /* Emoji Overlay */
-    .emoji { position: absolute; top: 5px; right: 5px; font-size: 20px; z-index: 10; animation: bounce 2s infinite; }
-    @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+    /* Main Gallery Wrapper */
+    .gallery-wrapper {
+      width: 100%;
+      height: 70vh;
+      display: flex;
+      align-items: center;
+      overflow-x: auto;
+      padding: 0 50px;
+      gap: 20px;
+      scrollbar-width: none; /* Hide scrollbar */
+    }
+    .gallery-wrapper::-webkit-scrollbar { display: none; }
 
-    @keyframes spinRevert { from { transform: rotateY(360deg); } to { transform: rotateY(0deg); } }
+    /* Card Style - बिल्कुल स्क्रीनशॉट जैसा */
+    .gallery-card {
+      min-width: 250px;
+      height: 400px;
+      background: #fff;
+      border-radius: 15px;
+      overflow: hidden;
+      position: relative;
+      transform: skewY(-2deg); /* तिरछा लुक */
+      transition: 0.5s ease;
+      box-shadow: 10px 10px 20px rgba(0,0,0,0.3);
+      border: 4px solid white;
+    }
 
-    /* Popup */
-    #final-popup { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center; z-index: 1000; }
-    .popup-content { background: #fff; padding: 40px; border-radius: 20px; text-align: center; border: 4px solid #ff4d6d; }
+    .gallery-card:hover {
+      transform: skewY(0deg) scale(1.05);
+      z-index: 10;
+    }
+
+    .gallery-card img, .gallery-card video {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+
+    /* Bottom Text */
+    .footer-text {
+      color: white; margin-top: 20px; font-size: 0.9rem; opacity: 0.8;
+    }
+
+    /* Button */
+    .btn {
+      padding: 12px 30px; background: #ff4d6d; color: white;
+      border: none; border-radius: 25px; cursor: pointer;
+      font-weight: bold; margin-top: 20px;
+    }
+
+    /* Last Message Popup */
+    #final-popup {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.85);
+      display: none; justify-content: center; align-items: center; z-index: 2000;
+    }
   </style>
 </head>
 <body>
 
   <div id="intro-screen">
-    <div class="card">
-      <h1>❤️ Hello Wifeyyyyy ❤️</h1>
-      <button class="btn" onclick="start()">Open Surprise 🌹</button>
+    <div class="welcome-card">
+      <h1 style="color: #d4145a;">Welcome to Our Gallery</h1>
+      <p>Every moment with you is a treasure...</p>
+      <button class="btn" onclick="startGallery()">Enter Our Love Story ✨</button>
     </div>
   </div>
 
-  <div id="gallery-container">
-    <div id="drag-container">
-      <div id="spin-container">
-        </div>
-    </div>
-    <div style="position:absolute; bottom:30px; width:100%; text-align:center;">
-      <button class="btn" onclick="showPopup()">Last Message 💌</button>
-    </div>
-  </div>
+  <div class="header-title">Our Beautiful Memories</div>
 
-  <div id="final-popup" id="final-popup">
-    <div class="popup-content">
-      <h2 style="color:#e91e63">Love You Jana ❤️</h2>
-      <h3 style="margin:10px 0">Have a good day Cutie! 😘</h3>
-      <button class="btn" onclick="document.getElementById('final-popup').style.display='none'">Close</button>
+  <div class="gallery-wrapper" id="galleryItems">
+    </div>
+
+  <p class="footer-text">Every moment with you is pure magic ❤️</p>
+  <button class="btn" onclick="openPopup()">Last Message 💌</button>
+
+  <div id="final-popup">
+    <div class="welcome-card">
+      <h2>Love You Forever ❤️</h2>
+      <p>You make my world beautiful!</p>
+      <button class="btn" onclick="closePopup()">Close</button>
     </div>
   </div>
 
   <script>
-    var radius = 350; 
-    var emojis = ["❤️", "💖", "😍", "🥰", "✨"];
-
-    function start() {
+    function startGallery() {
       document.getElementById('intro-screen').style.display = 'none';
-      document.getElementById('gallery-container').style.display = 'block';
-      init();
+      loadImages();
     }
 
-    function showPopup() { document.getElementById('final-popup').style.display = 'flex'; }
-
-    function init() {
-      var container = document.getElementById('spin-container');
+    function loadImages() {
+      const container = document.getElementById('galleryItems');
       
-      // 5 Videos
-      for(var i=1; i<=5; i++) {
-        createItem('v'+i+'.mp4', true);
-      }
-      // 15 Photos
-      for(var j=1; j<=15; j++) {
-        createItem(j+'.jpg', false);
-      }
-
-      var items = container.getElementsByClassName('gallery-item');
-      for(var k=0; k<items.length; k++) {
-        items[k].style.transform = "rotateY(" + (k * (360 / items.length)) + "deg) translateZ(" + radius + "px)";
+      // यहाँ अपनी फोटो के नाम डालो (जैसे 1.jpg, 2.jpg)
+      // और वीडियो के लिए (v1.mp4)
+      for(let i=1; i<=10; i++) {
+        const card = document.createElement('div');
+        card.className = 'gallery-card';
+        
+        // Example: Pehle 3 images phir baki video (Adjust as you need)
+        if(i <= 5) {
+          card.innerHTML = `<img src="${i}.jpg" onerror="this.src='https://via.placeholder.com/250x400?text=Photo+${i}'">`;
+        } else {
+          card.innerHTML = `<video src="v${i-5}.mp4" autoplay loop muted></video>`;
+        }
+        container.appendChild(card);
       }
     }
 
-    function createItem(src, isVideo) {
-      var div = document.createElement('div');
-      div.className = 'gallery-item';
-      
-      var el = document.createElement(isVideo ? 'video' : 'img');
-      el.src = src;
-      if(isVideo) { el.autoplay = true; el.loop = true; el.muted = true; }
-      
-      var emo = document.createElement('div');
-      emo.className = 'emoji';
-      emo.innerText = emojis[Math.floor(Math.random()*emojis.length)];
-      
-      div.appendChild(el);
-      div.appendChild(emo);
-      document.getElementById('spin-container').appendChild(div);
-    }
+    function openPopup() { document.getElementById('final-popup').style.display = 'flex'; }
+    function closePopup() { document.getElementById('final-popup').style.display = 'none'; }
   </script>
+
 </body>
-  </html>
-  
+</html>
