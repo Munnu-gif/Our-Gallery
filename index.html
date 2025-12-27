@@ -3,201 +3,162 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Special Anniversary</title>
+    <title>Special Galery of aniversary</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-pink: #ff758f;
-            --soft-purple: #c3aed6;
+            --deep-rose: #c9184a;
             --bg-gradient: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 100%);
         }
 
         body, html {
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             font-family: 'Poppins', sans-serif;
             background: var(--bg-gradient);
-            color: #444;
             scroll-behavior: smooth;
             overflow-x: hidden;
         }
 
         .hidden { display: none !important; }
 
-        /* Step 1: Calendar Styling */
+        /* --- 1. Heart Calendar Section --- */
         #calendar-screen {
             height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
         }
 
-        .calendar-card {
-            background: white;
-            padding: 20px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            max-width: 350px;
-            width: 90%;
-        }
-
-        .calendar-header {
-            background: var(--primary-pink);
-            color: white;
-            padding: 10px;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            font-weight: bold;
-        }
-
-        .days-grid {
+        .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 5px;
+            gap: 12px;
+            max-width: 400px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 20px;
+            backdrop-filter: blur(8px);
         }
 
-        .day {
-            padding: 10px;
+        .heart-date {
+            position: relative;
+            width: 45px; height: 45px;
+            display: flex; justify-content: center; align-items: center;
             cursor: pointer;
-            border-radius: 50%;
             transition: 0.3s;
         }
 
-        .day:hover { background: #ffebee; }
-        .special-day {
-            background: var(--primary-pink) !important;
-            color: white;
-            animation: pulse 1.5s infinite;
+        .heart-icon {
+            position: absolute;
+            color: #ffb3c1;
+            font-size: 42px;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1));
         }
 
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
+        .date-num {
+            position: relative; z-index: 2;
+            font-size: 14px; font-weight: 600;
+            color: #444;
         }
 
+        /* --- 2. Styling Sections --- */
         section {
-            padding: 50px 20px;
-            min-height: 80vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            padding: 60px 20px;
+            min-height: 90vh;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
         }
 
         .title {
             font-family: 'Dancing Script', cursive;
             font-size: 3rem;
-            color: var(--primary-pink);
-            margin-bottom: 20px;
+            color: var(--deep-rose);
+            margin-bottom: 25px;
             text-align: center;
         }
 
+        /* --- 3. 3D Media Card --- */
         .media-container {
-            position: relative;
-            width: 300px;
-            height: 400px;
-            perspective: 1000px;
+            width: 320px; height: 460px;
+            perspective: 1200px;
         }
 
         .media-card {
-            width: 100%;
-            height: 100%;
+            width: 100%; height: 100%;
             background: white;
-            border-radius: 15px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            border-radius: 25px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
+            border: 8px solid white;
+            transform: rotateY(-3deg) rotateX(4deg);
         }
 
         .media-card img, .media-card video {
-            width: 100%;
-            height: 85%;
+            width: 100%; height: 84%;
             object-fit: cover;
         }
 
         .media-info {
-            height: 15%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-            font-size: 1.2rem;
-            background: #fff;
+            height: 16%;
+            display: flex; justify-content: center; align-items: center;
+            background: #fff; font-weight: bold; font-size: 1.2rem;
         }
 
-        .nav-btn {
-            margin-top: 20px;
-            padding: 12px 30px;
+        .btn-skip {
             background: var(--primary-pink);
-            color: white;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 4px 15px rgba(255,117,143,0.4);
+            color: white; border: none;
+            padding: 12px 35px; border-radius: 50px;
+            font-weight: bold; margin-top: 25px;
+            cursor: pointer; box-shadow: 0 4px 12px rgba(255,117,143,0.4);
         }
 
         .glass-box {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            padding: 30px;
-            border-radius: 20px;
-            max-width: 600px;
-            text-align: center;
-            margin: 20px;
-            border: 1px solid white;
+            background: rgba(255, 255, 255, 0.75);
+            padding: 30px; border-radius: 20px;
+            max-width: 500px; text-align: center;
+            border: 1px solid white; line-height: 1.8;
         }
 
-        .memory-item {
-            margin: 15px 0;
-            padding: 10px;
-            border-bottom: 1px dashed var(--primary-pink);
+        /* --- 4. Period Care Section --- */
+        .care-list {
+            text-align: left; font-size: 1rem;
+            color: #555;
         }
+        .care-list li { margin-bottom: 12px; list-style: none; }
 
+        /* --- Popup --- */
         #thank-you-popup {
-            position: fixed;
-            bottom: -150px;
-            left: 50%;
+            position: fixed; bottom: -200px; left: 50%;
             transform: translateX(-50%);
-            background: white;
-            padding: 20px 40px;
+            background: white; padding: 25px;
             border-radius: 30px 30px 0 0;
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
-            transition: bottom 0.6s ease;
-            z-index: 1000;
-            text-align: center;
-            width: 90%;
-            max-width: 400px;
+            width: 90%; max-width: 400px;
+            text-align: center; box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
+            transition: bottom 0.8s ease-in-out;
+            z-index: 999;
         }
-
         #thank-you-popup.show { bottom: 0; }
     </style>
 </head>
 <body>
 
     <div id="calendar-screen">
-        <h2 style="color: #ff4d6d;">Choose our special date ❤️</h2>
-        <div class="calendar-card">
-            <div class="calendar-header">December 2025</div>
-            <div class="days-grid" id="calendar-days"></div>
-        </div>
+        <h2 style="color: var(--deep-rose); font-family: 'Dancing Script'; font-size: 2.5rem;">Choose Our Date ❤️</h2>
+        <div class="calendar-grid" id="calendar-days"></div>
     </div>
 
     <div id="main-content" class="hidden">
         
         <section id="shayari-section">
-            <div class="title">For You...</div>
+            <div class="title">My Promise</div>
             <div class="glass-box">
-                <p style="font-size: 1.3rem; line-height: 1.8;">
-                    "Aap Mile toh har khusi mil gayi hai,<br>
-                    Ek Sal Ek mahine ki yeh rah khil gai Hai"<br>
+                <p style="font-size: 1.4rem; font-weight: 600; color: #333;">
+                    "तुम्हें कभी जुदा नहीं होने देंगे खुद से,<br>
+                    तुम देर से मिले हो...<br>
+                    इतना नुकसान काफी है।"
                 </p>
             </div>
-            <button class="nav-btn" onclick="scrollToSection('photo-section')">See Our Photos 📸</button>
+            <button class="btn-skip" onclick="scrollToSection('photo-section')">See Our Photos 📸</button>
         </section>
 
         <section id="photo-section">
@@ -205,106 +166,98 @@
             <div class="media-container">
                 <div class="media-card">
                     <img id="current-photo" src="images/1.jpg" alt="Memory">
-                    <div class="media-info">
-                        <span id="photo-count">1</span> <span style="margin-left:10px">❤️</span>
-                    </div>
+                    <div class="media-info">Photo #<span id="p-count">1</span> 💝</div>
                 </div>
             </div>
-            <button class="nav-btn" onclick="nextPhoto()">Next Photo ➡️</button>
+            <button class="btn-skip" onclick="nextPhoto()">Skip to Next ➡️</button>
         </section>
 
         <section id="video-section">
-            <div class="title">Our Stories</div>
+            <div class="title">Our Clips</div>
             <div class="media-container">
                 <div class="media-card">
                     <video id="current-video" controls>
                         <source src="images/v1.mp4" type="video/mp4">
                     </video>
-                    <div class="media-info">
-                        <span id="video-count">1</span> <span style="margin-left:10px">✨</span>
-                    </div>
+                    <div class="media-info">Video #<span id="v-count">1</span> 🎬</div>
                 </div>
             </div>
-            <button class="nav-btn" onclick="nextVideo()">Next Video ➡️</button>
+            <button class="btn-skip" onclick="nextVideo()">Skip to Next ➡️</button>
         </section>
 
-        <section id="memories-section">
-            <div class="title">Favorite Memories</div>
-            <div class="glass-box">
-                <div class="memory-item"><strong>19 Jan 2025:</strong> The day You accepted me.</div>
-                <div class="memory-item"><strong>25 Dec 2025:</strong> Our Memorable night together.</div>
-                <div class="memory-item"><strong>27 Sep 2024:</strong> Where it all began... the start of us.</div>
+        <section id="care-section">
+            <div class="title">Care Guide for You during Period.</div>
+            <div class="glass-box care-list">
+                <p style="font-weight: bold; color: var(--deep-rose); border-bottom: 1px solid #ddd; padding-bottom: 5px;">Must Follow for Comfort:</p>
+                <li>🌸 <strong>Warmth:</strong> Use a heating pad or drink warm water to soothe cramps.</li>
+                <li>🌸 <strong>Iron Boost:</strong> Eat spinach, beans, or dark chocolate to stay energetic.</li>
+                <li>🌸 <strong>Hydration:</strong> Drink plenty of water to reduce bloating.</li>
+                <li>🌸 <strong>Rest:</strong> Your body is working hard, don't feel guilty for sleeping more.</li>
+                <li>🌸 <strong>Avoid:</strong> Try to skip heavy caffeine (coffee) and very salty snacks.</li>
             </div>
+            <button class="btn-skip" onclick="scrollToSection('memories-section')">Favorite Memories ❤️</button>
         </section>
 
-        <section id="poem-section" style="padding-bottom: 150px;">
-            <div class="title">A Promise</div>
+        <section id="memories-section" style="padding-bottom: 150px;">
+            <div class="title">Special Milestones</div>
             <div class="glass-box">
-                <p style="font-style: italic; font-size: 1.1rem;">
-                    In every breath, in every beat,<br>
-                    You make my life feel so complete.<br>
-                    A year has passed, a month has flown,<br>
-                    The greatest love I've ever known.
-                </p>
+                <p>📅 <strong>19 Jan 2025:</strong> The day you accepted me.</p>
+                <p>📅 <strong>25 Dec 2025:</strong> Our memorable night together.</p>
+                <p>📅 <strong>27 Sep 2024:</strong> The beginning of us.</p>
             </div>
         </section>
     </div>
 
     <div id="thank-you-popup">
-        <h3 style="color: var(--primary-pink); margin: 0;">Thank You, My Love! ❤️</h3>
-        <p>You are the best thing that ever happened to me!</p>
+        <h2 style="color: var(--deep-rose);">Thank You, My Everything! 🌹</h2>
+        <p>You make my world beautiful every single day.</p>
     </div>
 
     <script>
-        const folder = "images"; // <--- सुनिश्चित करें कि फोल्डर का नाम यही है
+        const folder = "images";
 
-        // --- CALENDAR ---
-        const daysContainer = document.getElementById('calendar-days');
+        // Build Calendar
+        const cal = document.getElementById('calendar-days');
         for (let i = 1; i <= 31; i++) {
-            const dayDiv = document.createElement('div');
-            dayDiv.classList.add('day');
-            dayDiv.innerText = i;
-            if (i === 27) {
-                dayDiv.classList.add('special-day');
-                dayDiv.onclick = startApp;
-            } else {
-                dayDiv.onclick = () => alert("Not this day! Hint: 27th is our day. 😉");
-            }
-            daysContainer.appendChild(dayDiv);
+            const d = document.createElement('div');
+            d.className = 'heart-date';
+            d.innerHTML = `<span class="heart-icon">❤️</span><span class="date-num">${i}</span>`;
+            d.onclick = () => {
+                if (i === 27) startApp();
+                else alert("Wrong date! Think about our special day. 😉");
+            };
+            cal.appendChild(d);
         }
 
         function startApp() {
             document.getElementById('calendar-screen').classList.add('hidden');
             document.getElementById('main-content').classList.remove('hidden');
-            window.scrollTo(0, 0);
+            window.scrollTo(0,0);
         }
 
-        // --- PHOTOS ---
-        let currentPhotoIdx = 1;
-        const totalPhotos = 15;
+        // Photo Gallery
+        let p = 1;
         function nextPhoto() {
-            if (currentPhotoIdx < totalPhotos) {
-                currentPhotoIdx++;
-                document.getElementById('current-photo').src = `${folder}/${currentPhotoIdx}.jpg`;
-                document.getElementById('photo-count').innerText = currentPhotoIdx;
+            if (p < 15) {
+                p++;
+                document.getElementById('current-photo').src = `${folder}/${p}.jpg`;
+                document.getElementById('p-count').innerText = p;
             } else {
-                alert("That's all the photos! Let's watch videos now.");
                 scrollToSection('video-section');
             }
         }
 
-        // --- VIDEOS ---
-        let currentVidIdx = 1;
-        const totalVideos = 5;
+        // Video Gallery
+        let v = 1;
         function nextVideo() {
-            if (currentVidIdx < totalVideos) {
-                currentVidIdx++;
-                const videoPlayer = document.getElementById('current-video');
-                videoPlayer.src = `${folder}/v${currentVidIdx}.mp4`;
-                videoPlayer.play();
-                document.getElementById('video-count').innerText = currentVidIdx;
+            if (v < 5) {
+                v++;
+                const vid = document.getElementById('current-video');
+                vid.src = `${folder}/v${v}.mp4`;
+                vid.play();
+                document.getElementById('v-count').innerText = v;
             } else {
-                scrollToSection('memories-section');
+                scrollToSection('care-section');
             }
         }
 
@@ -312,13 +265,13 @@
             document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
         }
 
+        // Show Popup at the end
         window.onscroll = function() {
-            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100) {
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 80) {
                 document.getElementById('thank-you-popup').classList.add('show');
             }
         };
     </script>
-
 </body>
-</html>
-    
+    </html>
+                
